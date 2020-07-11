@@ -56,7 +56,7 @@ Configuration Variables:
 
 .. code::
 
-SPORTSCRIBE_POSTHOUR_DELTA=6
+  SPORTSCRIBE_POSTHOUR_DELTA=6
 
 
 
