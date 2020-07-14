@@ -8,7 +8,8 @@ from dotenv import load_dotenv
 
 
 # Only post leagues which appear in the leagues list
-LEAGUES = [ 21, 23, 30, 39, 42, 47  ]
+# or set LEAGUES = [] to do them all
+LEAGUES = [ 21, 23, 30, 39, 42, 47 , 37, 24, 22 ]
 
 
 def postSportScribe(d : {}):
@@ -108,7 +109,7 @@ for d in db:
   if not d['posted']:
     if start - datetime.now() < timedelta(hours=post_delta):
       print(d['data']['league_id'])
-      if int(d['data']['league_id']) in LEAGUES:
+      if len(LEAGUES) == 0 or int(d['data']['league_id']) in LEAGUES:
         print("POSTING")
         postSportScribe(d['data'])
         db.update({'posted':True},Query().id == id)
