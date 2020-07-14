@@ -39,9 +39,11 @@ And setup your .env file with the following variables
 Usage
 =======
 
-sportscribe-twitter-poll.py should be run on a cron once a day. It pulls the API data from SportScribe and puts it in a database to be posted to twitter
-sportscribe-twitter.py should be run on a cron every hour. It polls the database and posts to twitter.
-
+| sportscribe-twitter-poll.py should be run on a cron once a day. It pulls the API data from SportScribe and puts it in a database to be posted to twitter
+|
+| sportscribe-twitter.py should be run on a cron every hour. It polls the database and posts to twitter.
+|
+| Of course this is just meant to be starter code. The text that is posted to Twitter is for SportScribe, and links to our website. You should probably modify the content to suit your needs.
 
 
 
