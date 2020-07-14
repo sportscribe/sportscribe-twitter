@@ -32,7 +32,6 @@ for i in range(0,pull_days):
   pull_date = pull_time.strftime('%Y-%m-%d')
   print('Pulling ', pull_date)
   result = ss.getMatchPreviewByDate(pull_date)
-  print(result)
   for r in result.data:
     id = r['fixture_id']
     Data = Query()
