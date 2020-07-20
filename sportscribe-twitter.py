@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 # Only post leagues which appear in the leagues list
 # or set LEAGUES = [] to do them all
-LEAGUES = [ 21, 23, 30, 39, 42, 47 , 37, 24, 22 ]
+LEAGUES = [ 21, 23, 30, 39, 42, 47 , 37, 24, 22 , 21]
 
 
 def postSportScribe(d : {}):
@@ -54,10 +54,16 @@ def postSportScribe(d : {}):
 
   other_twitter = set(other_twitter)
 
-  if len(other_twitter) > 0:
-    msg = msg + '\n\n'
+  if len(other_twitter) > 0 or 'match' in social:
+    msg = msg + '\n\n\n'
+    if 'match' in social:
+      match_social = social['match']
+      if 'platform' in match_social and match_social['platform'] == 'TWTR':
+        msg = msg + match_social['tag']
+
     for t in other_twitter:
       msg = msg + t + ' '
+
 
 
   api.PostUpdate(msg,media=media)
