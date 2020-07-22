@@ -59,7 +59,7 @@ def postSportScribe(d : {}):
       match_social = social['match']
       for ms in match_social:
         if 'platform' in ms and ms['platform'] == 'TWTR':
-          msg = msg + ms['tag']
+          msg = msg + ms['tag'] + ' '
 
     for t in other_twitter:
       msg = msg + t + ' '
