@@ -16,7 +16,7 @@ And install twitter-python and tinydb
 
 .. code::
 
-  pip install twitter
+  pip install python-twitter
   pip install tinydb
 
 
