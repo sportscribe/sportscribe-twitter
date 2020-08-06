@@ -44,14 +44,21 @@ def postSportScribe(d : {}):
     elif s['platform'] == 'TWTR_OTHER':
       other_twitter.append(s['tag'])
 
+  # If we have twitter handles for both teams
   if vt_twitter and ht_twitter:
     intro = ht_name + ' ' + ht_twitter  +  ' hosts ' + vt_name + ' ' + vt_twitter
-  else:
+  # If we dont have twitter handles,  and we have pro account
+  elif 'parts' in d:
     intro = d['parts']['intro']
+  # Else just use the names
+  else:
+    intro = ht_name +  ' hosts ' + vt_twitter
 
 
+  # Build the message string
   msg = intro + '\n\n' + 'Automatically post match previews and data to your twitter feed. Learn how at ' + click_url
 
+  # If we have hashtag data on this match or teams, post them after the message
   other_twitter = set(other_twitter)
   if len(other_twitter) > 0 or 'match' in social:
     msg = msg + '\n\n\n'
@@ -65,7 +72,7 @@ def postSportScribe(d : {}):
       msg = msg + t + ' '
 
 
-
+  # Post the final message
   api.PostUpdate(msg,media=media)
 
 ###################################################################
