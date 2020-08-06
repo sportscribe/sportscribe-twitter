@@ -32,13 +32,18 @@ for i in range(0,pull_days):
   pull_date = pull_time.strftime('%Y-%m-%d')
   print('Pulling ', pull_date)
   result = ss.getMatchPreviewByDate(pull_date)
-  for r in result.data:
-    id = r['fixture_id']
-    Data = Query()
-    if not db.search(Data.id == id):
-      print("Inserting " , id)
-      start = datetime.strptime(r['start_utc_timestamp'],'%Y-%m-%d %H:%M:%S')
-      db.insert({'id':id,'posted':False,'start_time_utc':r['start_utc_timestamp'],'start_timestamp_utc':start.timestamp(),'data':r})
 
-
+  if result:
+    for r in result.data:
+      try:
+        id = r['fixture_id']
+        Data = Query()
+        if not db.search(Data.id == id):
+          print("Inserting " , id)
+          start = datetime.strptime(r['start_utc_timestamp'],'%Y-%m-%d %H:%M:%S')
+          db.insert({'id':id,'posted':False,'start_time_utc':r['start_utc_timestamp'],'start_timestamp_utc':start.timestamp(),'data':r})
+      except:
+        print('Error, skipping')
+  else:
+    print('Error pulling ' , pull_date)
 

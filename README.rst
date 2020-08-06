@@ -3,7 +3,7 @@ sportscribe-twitter
 
 sportscribe-twitter -- Python application to post SportScribe content to twitter
 
-v1.0.0
+v1.0.1
 
 Installation
 ============
@@ -74,3 +74,4 @@ Usage
 ChangeLog
 =========
 
+| v1.0.1 - added better error handling
