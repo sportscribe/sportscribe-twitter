@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 # Only post leagues which appear in the leagues list
 # or set LEAGUES = [] to do them all
-LEAGUES = [ 21, 23, 30, 39, 42, 47 , 37, 24, 22 , 21, 17]
+LEAGUES = [ 21, 23, 30, 39, 42, 47 , 37, 24, 22 , 21, 17 , 106 , 18, 86]
 
 
 def postSportScribe(d : {}):
@@ -73,7 +73,13 @@ def postSportScribe(d : {}):
 
 
   # Post the final message
-  api.PostUpdate(msg,media=media)
+  try:
+    api.PostUpdate(msg,media=media)
+    return True
+  except:
+    print("ERROR POSTING TO TWITTER")
+    return False
+
 
 ###################################################################
 ##
@@ -119,12 +125,12 @@ for d in db:
   start = datetime.fromtimestamp(d['start_timestamp_utc'])
   id = d['id']
   if not d['posted']:
-    if start - datetime.now() < timedelta(hours=post_delta):
+    if (start - datetime.now()) < timedelta(hours=post_delta):
       print(d['data']['league_id'])
       if len(LEAGUES) == 0 or int(d['data']['league_id']) in LEAGUES:
         print("POSTING")
-        postSportScribe(d['data'])
-        db.update({'posted':True},Query().id == id)
+        if postSportScribe(d['data']):
+          db.remove(Query().id == id)
 
   if start <= datetime.now():
     print('Removing ' , id , ' from db')
