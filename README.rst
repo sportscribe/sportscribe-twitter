@@ -3,7 +3,7 @@ sportscribe-twitter
 
 sportscribe-twitter -- Python application to post SportScribe content to twitter
 
-v1.0.1
+v1.0.2
 
 Installation
 ============
@@ -58,6 +58,11 @@ Configuration Variables:
 
   SPORTSCRIBE_POSTHOUR_DELTA=6
 
+.. code::
+
+  LEAGUES = 21, 23, 30
+
+| A comma separated list of all the league_id's you wish to post. Empty or missing variable will result in all leagues being posted
 
 
 Usage
@@ -74,4 +79,5 @@ Usage
 ChangeLog
 =========
 
+| v1.0.2 - moved LEAGUES list to .env
 | v1.0.1 - added better error handling

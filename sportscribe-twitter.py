@@ -6,15 +6,7 @@ sportscribe = __import__("sportscribe-python")
 from sportscribe import SportScribe
 from dotenv import load_dotenv
 
-
-# Only post leagues which appear in the leagues list
-# or set LEAGUES = [] to do them all
-LEAGUES = [ 21, 23, 30, 39, 42, 47 , 37, 24, 22 , 21, 17 , 106 , 18, 86]
-
-
 def postSportScribe(d : {}):
-
-  click_url = 'SportScribe.co'
 
   if d['match_img']:
     media = d['match_img'];
@@ -54,9 +46,23 @@ def postSportScribe(d : {}):
   else:
     intro = ht_name +  ' hosts ' + vt_twitter
 
-
+  #######################################################################################################
+  #
   # Build the message string
+  # Be sure not to let the msg get larger than the 280 twtter limit
+  # Make sure click_url is short. When hashtags are used, you dont have a lot of space to work with
+  #
+  #######################################################################################################
+
+
+  click_url = 'SportScribe.co'
   msg = intro + '\n\n' + 'Automatically post match previews and data to your twitter feed. Learn how at ' + click_url
+
+
+  ########################################################################################################
+  ## END 
+  ########################################################################################################
+
 
   # If we have hashtag data on this match or teams, post them after the message
   other_twitter = set(other_twitter)
@@ -94,6 +100,12 @@ if not load_dotenv():
   exit()
 
 
+if os.getenv('LEAGUES'):
+  LEAGUES = list(os.getenv('LEAGUES').replace(' ','').split(','))
+else:
+  LEAGUES = []
+
+print(LEAGUES)
 # Setup TinyDB object
 db = TinyDB(os.path.dirname(os.path.realpath(__file__)) + '/sportscribe.db.json')
 
