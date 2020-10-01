@@ -139,7 +139,7 @@ for d in db:
   if not d['posted']:
     if (start - datetime.now()) < timedelta(hours=post_delta):
       print(d['data']['league_id'])
-      if len(LEAGUES) == 0 or int(d['data']['league_id']) in LEAGUES:
+      if len(LEAGUES) == 0 or str(d['data']['league_id']) in LEAGUES:
         print("POSTING")
         if postSportScribe(d['data']):
           db.remove(Query().id == id)
