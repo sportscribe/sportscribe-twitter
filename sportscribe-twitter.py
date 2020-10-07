@@ -1,3 +1,4 @@
+import logging
 import twitter, os
 from datetime import datetime, date, timedelta
 import time
@@ -79,11 +80,14 @@ def postSportScribe(d : {}):
 
 
   # Post the final message
+  fixture = d['fixture_id']
   try:
     api.PostUpdate(msg,media=media)
+    logger.info('Fixture {}:\tSuccessfuly Posted'.format(fixture))
     return True
-  except:
+  except Exception as e:
     print("ERROR POSTING TO TWITTER")
+    logger.error('Fixture {}:\t{}'.format(fixture,e))
     return False
 
 
@@ -105,7 +109,21 @@ if os.getenv('LEAGUES'):
 else:
   LEAGUES = []
 
-print(LEAGUES)
+
+if os.getenv('LOGFILE'):
+  logfile = os.getenv('LOGFILE')
+else:
+  logfile = os.path.dirname(os.path.realpath(__file__)) + '/sportscribe-twitter.log'
+
+
+# Set Up Logging
+logger = logging.getLogger('sportscribe-twitter')
+hdlr = logging.FileHandler(logfile)
+formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+hdlr.setFormatter(formatter)
+logger.addHandler(hdlr)
+logger.setLevel(logging.INFO)
+
 # Setup TinyDB object
 db = TinyDB(os.path.dirname(os.path.realpath(__file__)) + '/sportscribe.db.json')
 
